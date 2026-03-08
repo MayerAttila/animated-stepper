@@ -2,6 +2,7 @@
   "name": "animated-stepper",
   "version": "0.1.1",
   "description": "Animated stepper component for React applications",
+  "homepage": "https://stepper.mayerattila.site",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
