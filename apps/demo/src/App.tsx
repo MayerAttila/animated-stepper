@@ -385,6 +385,16 @@ function App() {
           Edit every prop in real time to show motion, step configuration, and full
           theme customization.
         </p>
+        <div className="hero-actions">
+          <a
+            className="btn link-btn"
+            href="https://www.npmjs.com/package/animated-stepper"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View Package on npm
+          </a>
+        </div>
       </section>
 
       <section className="preview-panel">
@@ -440,95 +450,6 @@ function App() {
       </section>
 
       <section className="panel-grid">
-        <article className="panel panel-steps">
-          <h2>Step Props (`steps`)</h2>
-
-          <label className="field">
-            <span>Preset</span>
-            <select
-              className="control"
-              value={selectedStepPreset}
-              onChange={(event) => {
-                const nextPreset = event.target.value;
-                if (nextPreset === "custom") {
-                  setSelectedStepPreset("custom");
-                  return;
-                }
-                applyStepPreset(nextPreset);
-              }}
-            >
-              {stepPresets.map((preset) => (
-                <option key={preset.id} value={preset.id}>
-                  {preset.label}
-                </option>
-              ))}
-              <option value="custom">Custom</option>
-            </select>
-          </label>
-
-          <div className="step-list">
-            {steps.map((step, index) => (
-              <div className="step-editor" key={`step-editor-${index}`}>
-                <div className="step-editor-head">
-                  <strong>Step {index + 1}</strong>
-                  <button
-                    type="button"
-                    className="btn btn-danger btn-small"
-                    onClick={() => removeStep(index)}
-                    disabled={steps.length <= 1}
-                  >
-                    Remove
-                  </button>
-                </div>
-
-                <div className="field-grid">
-                  <label className="field">
-                    <span>Key</span>
-                    <input
-                      className="control"
-                      type="text"
-                      value={step.key}
-                      onChange={(event) =>
-                        updateStepField(index, "key", event.target.value)
-                      }
-                      placeholder={`step-${index + 1}`}
-                    />
-                  </label>
-                  <label className="field">
-                    <span>Label</span>
-                    <input
-                      className="control"
-                      type="text"
-                      value={step.label}
-                      onChange={(event) =>
-                        updateStepField(index, "label", event.target.value)
-                      }
-                      placeholder={`Step ${index + 1}`}
-                    />
-                  </label>
-                </div>
-
-                <label className="field">
-                  <span>Description (optional)</span>
-                  <input
-                    className="control"
-                    type="text"
-                    value={step.description ?? ""}
-                    onChange={(event) =>
-                      updateStepField(index, "description", event.target.value)
-                    }
-                    placeholder="Visible in your own app logic"
-                  />
-                </label>
-              </div>
-            ))}
-          </div>
-
-          <button type="button" className="btn btn-accent" onClick={addStep}>
-            Add Step
-          </button>
-        </article>
-
         <article className="panel panel-theme">
           <div className="theme-head">
             <h2>Theme Props (`theme`)</h2>
@@ -620,6 +541,95 @@ function App() {
               </label>
             ))}
           </fieldset>
+        </article>
+
+        <article className="panel panel-steps">
+          <h2>Step Props (`steps`)</h2>
+
+          <label className="field">
+            <span>Preset</span>
+            <select
+              className="control"
+              value={selectedStepPreset}
+              onChange={(event) => {
+                const nextPreset = event.target.value;
+                if (nextPreset === "custom") {
+                  setSelectedStepPreset("custom");
+                  return;
+                }
+                applyStepPreset(nextPreset);
+              }}
+            >
+              {stepPresets.map((preset) => (
+                <option key={preset.id} value={preset.id}>
+                  {preset.label}
+                </option>
+              ))}
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+
+          <div className="step-list">
+            {steps.map((step, index) => (
+              <div className="step-editor" key={`step-editor-${index}`}>
+                <div className="step-editor-head">
+                  <strong>Step {index + 1}</strong>
+                  <button
+                    type="button"
+                    className="btn btn-danger btn-small"
+                    onClick={() => removeStep(index)}
+                    disabled={steps.length <= 1}
+                  >
+                    Remove
+                  </button>
+                </div>
+
+                <div className="field-grid">
+                  <label className="field">
+                    <span>Key</span>
+                    <input
+                      className="control"
+                      type="text"
+                      value={step.key}
+                      onChange={(event) =>
+                        updateStepField(index, "key", event.target.value)
+                      }
+                      placeholder={`step-${index + 1}`}
+                    />
+                  </label>
+                  <label className="field">
+                    <span>Label</span>
+                    <input
+                      className="control"
+                      type="text"
+                      value={step.label}
+                      onChange={(event) =>
+                        updateStepField(index, "label", event.target.value)
+                      }
+                      placeholder={`Step ${index + 1}`}
+                    />
+                  </label>
+                </div>
+
+                <label className="field">
+                  <span>Description (optional)</span>
+                  <input
+                    className="control"
+                    type="text"
+                    value={step.description ?? ""}
+                    onChange={(event) =>
+                      updateStepField(index, "description", event.target.value)
+                    }
+                    placeholder="Visible in your own app logic"
+                  />
+                </label>
+              </div>
+            ))}
+          </div>
+
+          <button type="button" className="btn btn-accent" onClick={addStep}>
+            Add Step
+          </button>
         </article>
 
         <article className="panel panel-code">

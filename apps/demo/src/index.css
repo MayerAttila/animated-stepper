@@ -38,6 +38,7 @@ body {
 }
 
 .hero {
+  position: relative;
   padding: 22px;
   border-radius: 18px;
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62));
@@ -72,6 +73,21 @@ body {
   max-width: 70ch;
   color: var(--text-soft);
   font-size: 15px;
+}
+
+.hero-actions {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .preview-panel,
@@ -395,5 +411,10 @@ code {
   .theme-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .hero-actions {
+    position: static;
+    margin-top: 14px;
   }
 }
