@@ -26,7 +26,6 @@ body {
   min-height: 100vh;
   background:
     radial-gradient(1200px 600px at 10% -15%, var(--bg-glow) 0%, transparent 70%),
-    radial-gradient(900px 500px at 100% 0%, #fde68a 0%, transparent 65%),
     var(--bg-base);
 }
 
@@ -308,13 +307,69 @@ h2 {
   font-size: 13px;
 }
 
+.snippet-wrap {
+  position: relative;
+}
+
+.snippet-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.snippet-copy-btn.is-copied {
+  border-color: rgba(15, 118, 110, 0.52);
+  color: #0f766e;
+  background: #ecfdf5;
+}
+
+.copy-icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.copy-icon::before,
+.copy-icon::after {
+  content: "";
+  position: absolute;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+}
+
+.copy-icon::before {
+  width: 10px;
+  height: 10px;
+  top: 3px;
+  left: 3px;
+}
+
+.copy-icon::after {
+  width: 10px;
+  height: 10px;
+  top: 0;
+  left: 0;
+  opacity: 0.75;
+}
+
 pre {
   margin: 0;
   padding: 14px;
+  padding-top: 18px;
+  padding-right: 56px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: #0f172a;
-  color: #e2e8f0;
+  background: #ffffff;
+  color: #0f172a;
   overflow-x: auto;
 }
 

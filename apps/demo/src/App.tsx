@@ -209,6 +209,9 @@ function App() {
   const [steps, setSteps] = useState<Step[]>(() => cloneSteps(stepPresets[0].steps));
   const [activeStep, setActiveStep] = useState(0);
   const [pendingStep, setPendingStep] = useState<number | null>(null);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">(
+    "idle",
+  );
   const [selectedStepPreset, setSelectedStepPreset] = useState(stepPresets[0].id);
 
   const [theme, setTheme] = useState<StepperTheme>(() => ({
@@ -343,6 +346,35 @@ function App() {
 
     return lines.join("\n");
   }, [activeStep, cleanSteps, pendingStep, theme, useCustomTheme]);
+
+  const copySnippet = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(snippet);
+      } else {
+        const input = document.createElement("textarea");
+        input.value = snippet;
+        input.setAttribute("readonly", "");
+        input.style.position = "absolute";
+        input.style.left = "-9999px";
+        document.body.appendChild(input);
+        input.select();
+        const copied = document.execCommand("copy");
+        document.body.removeChild(input);
+        if (!copied) {
+          throw new Error("Copy command failed");
+        }
+      }
+
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("error");
+    }
+
+    window.setTimeout(() => {
+      setCopyStatus("idle");
+    }, 1800);
+  };
 
   return (
     <main className="playground-page">
@@ -595,9 +627,20 @@ function App() {
           <p className="panel-note">
             Keys are normalized so blank or duplicate values still render safely.
           </p>
-          <pre>
-            <code>{snippet}</code>
-          </pre>
+          <div className="snippet-wrap">
+            <button
+              type="button"
+              className={`btn btn-small snippet-copy-btn ${copyStatus === "copied" ? "is-copied" : ""}`}
+              onClick={copySnippet}
+              aria-label={copyStatus === "copied" ? "Copied" : "Copy snippet"}
+              title={copyStatus === "copied" ? "Copied" : "Copy snippet"}
+            >
+              <span className="copy-icon" aria-hidden="true" />
+            </button>
+            <pre>
+              <code>{snippet}</code>
+            </pre>
+          </div>
         </article>
       </section>
     </main>
