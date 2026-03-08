@@ -1,0 +1,112 @@
+.st-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.st-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.st-rail {
+  display: flex;
+  align-items: center;
+}
+
+.st-node {
+  display: flex;
+  align-items: center;
+}
+
+.st-dot {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+}
+
+.st-dot-motion {
+  transition-property: transform, background-color, border-color, color;
+  transition-timing-function: ease-out;
+  transition-duration: var(--st-dotDur);
+}
+
+.st-dot-complete {
+  background: var(--st-brand);
+  border-color: var(--st-brand);
+  color: var(--st-completeText);
+  transform: scale(1.05);
+}
+
+.st-dot-active {
+  background: var(--st-dotBg);
+  border-color: var(--st-brand);
+  color: var(--st-activeText);
+  transform: scale(1.1);
+}
+
+.st-dot-inactive {
+  background: var(--st-dotBg);
+  border-color: var(--st-inactiveBorder);
+  color: var(--st-inactiveText);
+  transform: scale(1);
+}
+
+.st-connector-shell {
+  width: var(--st-connW);
+  margin: 0 var(--st-gap);
+}
+
+.st-connector-track {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: var(--st-track);
+}
+
+.st-connector-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--st-brand);
+  border-radius: 9999px;
+  transform-origin: left;
+  transition-property: transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0ms;
+}
+
+.st-connector-moving {
+  transition-duration: var(--st-connDur);
+}
+
+.st-label-row {
+  margin-top: 12px;
+  display: flex;
+}
+
+.st-label-cell {
+  width: 32px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.st-label-active {
+  color: var(--st-brand);
+  transition: color var(--st-dotDur) ease-out;
+}
+
+.st-label-inactive {
+  color: var(--st-labelInactive);
+  transition: color var(--st-dotDur) ease-out;
+}
+

@@ -1,0 +1,13 @@
+{
+  "name": "stepper-package-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:package": "npm run -w animated-stepper build",
+    "dev": "npm run -w animated-stepper build && npm run -w stepper-demo dev",
+    "build": "npm run -w animated-stepper build && npm run -w stepper-demo build"
+  }
+}
