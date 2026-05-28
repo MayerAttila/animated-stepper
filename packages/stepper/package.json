@@ -1,6 +1,6 @@
 {
   "name": "animated-stepper",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Animated stepper component for React applications",
   "homepage": "https://stepper.mayerattila.site",
   "type": "module",

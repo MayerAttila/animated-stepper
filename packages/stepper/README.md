@@ -11,7 +11,7 @@ The demo site is a playground for the package. It is intentionally simple: previ
 
 ## Preview
 
-![animated-stepper preview](./assets/stepper.gif)
+![animated-stepper preview](https://cdn.jsdelivr.net/npm/animated-stepper@0.1.2/assets/stepper.gif)
 
 ## Install
 
