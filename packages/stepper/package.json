@@ -17,6 +17,7 @@
   },
   "files": [
     "dist",
+    "assets",
     "src/style.css",
     "README.md"
   ],

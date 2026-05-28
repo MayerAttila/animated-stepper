@@ -1,21 +1,29 @@
 # animated-stepper
 
-Animated stepper component for React with smooth forward/backward transitions and full theme overrides.
+A small controlled React stepper with animated connector transitions, typed props, and theme tokens.
 
-Live demo: https://stepper.mayerattila.site
+- Live demo: https://stepper.mayerattila.site/
+- npm: https://www.npmjs.com/package/animated-stepper
+- React: 18 or 19
+- TypeScript types: included
 
-## Features
+The demo site is a playground for the package. It is intentionally simple: preview the component, change steps and theme values, then copy the props shape into your app.
 
-- Smooth animated connectors and dot transitions
-- Controlled state API (`activeStep` + `pendingStep`)
-- Jump-to-step support
-- Theme tokens for colors, spacing, and animation timings
-- TypeScript types included
+## Preview
 
-## Installation
+![animated-stepper preview](./assets/stepper.gif)
+
+## Install
 
 ```bash
 npm install animated-stepper
+```
+
+Import the component and stylesheet:
+
+```tsx
+import Stepper from "animated-stepper";
+import "animated-stepper/style.css";
 ```
 
 ## Quick Start
@@ -31,7 +39,7 @@ const steps: Step[] = [
   { key: "confirm", label: "Confirm" },
 ];
 
-export default function Example() {
+export function CheckoutStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [pendingStep, setPendingStep] = useState<number | null>(null);
 
@@ -39,6 +47,7 @@ export default function Example() {
     if (pendingStep !== null) return;
     if (nextStep < 0 || nextStep >= steps.length) return;
     if (nextStep === activeStep) return;
+
     setPendingStep(nextStep);
   };
 
@@ -61,29 +70,83 @@ export default function Example() {
 }
 ```
 
+## How It Works
+
+`animated-stepper` is controlled by your app.
+
+- `activeStep`: committed/current step index.
+- `pendingStep`: target step while the connector animation runs.
+- `onCommitStep`: called when the active connector finishes animating.
+
+Keep `pendingStep` as `null` when idle. Set it to the target index to start a transition. In `onCommitStep`, commit the new `activeStep` and clear `pendingStep`.
+
 ## API
+
+### `Stepper`
+
+```tsx
+<Stepper
+  steps={steps}
+  activeStep={activeStep}
+  pendingStep={pendingStep}
+  theme={theme}
+  onCommitStep={(step) => {
+    setActiveStep(step);
+    setPendingStep(null);
+  }}
+/>
+```
+
+| Prop | Type | Required | Description |
+| --- | --- | --- | --- |
+| `steps` | `Step[]` | Yes | Steps in display order. |
+| `activeStep` | `number` | Yes | Current committed step index. |
+| `pendingStep` | `number \| null` | Yes | Target step during animation, or `null` when idle. |
+| `theme` | `Partial<StepperTheme>` | No | Visual token overrides. |
+| `onCommitStep` | `(step: number) => void` | Yes | Fires after the moving connector transition ends. |
 
 ### `Step`
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `key` | `string` | Yes | Unique step identifier |
-| `label` | `string` | Yes | Text shown under the step dot |
-| `description` | `string` | No | Optional metadata for your app logic |
+| `key` | `string` | Yes | Stable unique step key. |
+| `label` | `string` | Yes | Label rendered below the dot. |
+| `description` | `string` | No | Optional app metadata. Not rendered by the component. |
 
-### `Stepper` props
+### Exports
 
-| Prop | Type | Required | Description |
-| --- | --- | --- | --- |
-| `steps` | `Step[]` | Yes | Step definitions in display order |
-| `activeStep` | `number` | Yes | Current committed step index |
-| `pendingStep` | `number \| null` | Yes | Next step index while animation is running |
-| `theme` | `Partial<StepperTheme>` | No | Theme token overrides |
-| `onCommitStep` | `(step: number) => void` | Yes | Called when connector animation finishes |
+```tsx
+import Stepper, {
+  Stepper as NamedStepper,
+  defaultStepperTheme,
+  type Step,
+  type StepperProps,
+  type StepperTheme,
+} from "animated-stepper";
+```
 
-## Theme Tokens (`StepperTheme`)
+## Theme
 
-Default values:
+Pass any subset of `StepperTheme` through the `theme` prop.
+
+```tsx
+<Stepper
+  steps={steps}
+  activeStep={activeStep}
+  pendingStep={pendingStep}
+  theme={{
+    brand: "#0f766e",
+    connectorWidthPx: 56,
+    connectorDurationMs: 360,
+  }}
+  onCommitStep={(step) => {
+    setActiveStep(step);
+    setPendingStep(null);
+  }}
+/>
+```
+
+Default tokens:
 
 | Token | Default |
 | --- | --- |
@@ -100,24 +163,19 @@ Default values:
 | `completeText` | `#ffffff` |
 | `labelInactive` | `#6b7280` |
 
-Example override:
+## Styling
+
+Import once in your app entry:
 
 ```tsx
-<Stepper
-  steps={steps}
-  activeStep={activeStep}
-  pendingStep={pendingStep}
-  theme={{
-    brand: "#0f766e",
-    connectorWidthPx: 56,
-    connectorDurationMs: 360,
-  }}
-  onCommitStep={onCommitStep}
-/>
+import "animated-stepper/style.css";
 ```
+
+The package stylesheet defines the layout and animation classes. Theme values are applied as CSS variables from the `theme` prop.
 
 ## Notes
 
-- This is a controlled component. Manage step state in your app.
-- Keep `pendingStep` as `null` when no transition is active.
-- Include `animated-stepper/style.css` once in your app entry.
+- Step indexes are zero-based.
+- The component does not manage form state or routing.
+- Jumping forward or backward is supported by setting `pendingStep` to any valid step index.
+- Duplicate or empty step keys should be normalized by your app before rendering.
